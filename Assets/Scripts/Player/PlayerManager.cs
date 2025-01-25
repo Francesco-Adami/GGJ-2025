@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,18 +17,15 @@ public class PlayerManager : MonoBehaviour
     [Header("Player info")]
     public int maxHealth;
     [HideInInspector] public int currentHealth;
-
-    [Header("Player settings")]
-    [SerializeField] private float speed;
-    [SerializeField] private float maxSpeed;
+    public float speed;
+    //[SerializeField] private float maxSpeed;
 
     private Rigidbody playerRb;
     private float fireCooldown = 0f;
-    [SerializeField] private float fireRate = 1f;
 
     [Header("Player Attack")]
+    [SerializeField] private float fireRate = 1f;
     public Transform firePoint;
-    //public GameObject projectilePrefab;
     public int playerDamage;
 
     [Header("Projectile pool")]
@@ -35,8 +33,13 @@ public class PlayerManager : MonoBehaviour
     public List<Projectile> projectiles;
     private bool isReloading;
 
-
+    Vector3 movement;
     private bool enableShoot = false;
+
+    [Header("Player PowerUps")]
+    public bool canDash = false;
+    [SerializeField] private float dashCooldown;
+    [SerializeField] private float dashForce;
 
     private void Awake()
     {
@@ -58,9 +61,20 @@ public class PlayerManager : MonoBehaviour
         ReloadBullets();
     }
 
+    private void Update()
+    {
+        if ((Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.LeftShift)) && canDash)
+        {
+            Dash();
+        }
+    }
+
     private void FixedUpdate()
     {
-        if (currentHealth > maxHealth) currentHealth = maxHealth;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
 
         Move();
         Cooldown();
@@ -73,14 +87,32 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    #region DASH
+    private void Dash()
+    {
+        if (movement.magnitude == 0)
+            movement = Vector3.forward * speed;    
+        playerRb.AddForce(movement * dashForce, ForceMode.Impulse);
+        canDash = false;
+        StartCoroutine(DashRoutine());
+    }
+
+    private IEnumerator DashRoutine()
+    {
+        yield return new WaitForSeconds(dashCooldown);
+
+        canDash = true;
+    }
+    #endregion
+
     private void Move()
     {
-        // movement = ((transform.forward * Input.GetAxis("Vertical")) + transform.right * Input.GetAxis("Horizontal")) * speed;
-        Vector3 movement;
-        movement = transform.forward * Input.GetAxis("Vertical") * speed;
-        playerRb.AddForce(movement, ForceMode.Force);
-        movement = transform.right * Input.GetAxis("Horizontal") * speed;
-        playerRb.AddForce(movement, ForceMode.Force);
+        movement = ((transform.forward * Input.GetAxis("Vertical")) + transform.right * Input.GetAxis("Horizontal")) * speed;
+        playerRb.AddForce(movement, ForceMode.VelocityChange);
+        
+        //movement = transform.forward * Input.GetAxis("Vertical") * speed;
+        //movement = transform.right * Input.GetAxis("Horizontal") * speed;
+        //playerRb.AddForce(movement, ForceMode.Force);
     }
 
     #region SHOOT
@@ -101,9 +133,12 @@ public class PlayerManager : MonoBehaviour
         {
             if (enableShoot)
             {
-                SpawnBullet(firePoint.position, firePoint.rotation);
-                // Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-                fireCooldown = 1f / fireRate;
+                //SpawnBullet(firePoint.position, firePoint.rotation);
+                float a;
+                if (PowerUpManager.Instance.powerUpFireRate == null) a = 0;
+                else a = PowerUpManager.Instance.powerUpFireRate.fireRate;
+                fireCooldown = 1f / (fireRate + (fireRate * a / 100));
+                print("FireRate: " + (fireRate + (fireRate * a / 100)));
                 enableShoot = false;
             }
         }
@@ -148,7 +183,7 @@ public class PlayerManager : MonoBehaviour
 
     public int GetPlayerDamage()
     {
-        return playerDamage + PowerUpManager.Instance.powerUpDanno.addDamage;
+        return playerDamage;
     }
 
     public void DamagePlayer(int damage)

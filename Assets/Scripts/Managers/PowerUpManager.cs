@@ -13,8 +13,7 @@ public class PowerUpManager : MonoBehaviour
 
     #endregion
 
-    public PU_Danno powerUpDanno;
-
+    public PU_FireRate powerUpFireRate;
 
     private void Awake()
     {
@@ -26,6 +25,28 @@ public class PowerUpManager : MonoBehaviour
         {
             instance = this;
         }
+    }
+    public void SetNewDamage(int addDamage)
+    {
+        PlayerManager.Instance.playerDamage += addDamage;
+        print("MaxHealth: " + PlayerManager.Instance.playerDamage);
+    }
+
+    public void SetMaxHealth(int addHealth)
+    {
+        PlayerManager.Instance.maxHealth += addHealth;
+        print("MaxHealth: " + PlayerManager.Instance.maxHealth);
+    }
+
+    public void SetDash()
+    {
+        PlayerManager.Instance.canDash = true;
+    }
+
+    public void SetSpeed(int speedPercentage)
+    {
+        PlayerManager.Instance.speed += PlayerManager.Instance.speed * speedPercentage / 100;
+        print("Speed: " + PlayerManager.Instance.speed);
     }
 
 }
