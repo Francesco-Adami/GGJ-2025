@@ -21,7 +21,7 @@ public class EnemiesManager : MonoBehaviour
 
     public List<Transform> spawnPoints;
 
-    [SerializeField] private int currentWave;
+    public int currentWave;
     [SerializeField] private int levelUpEnemiesEveryXWaves;
     [HideInInspector] public int enemiesSpawned = 0;
 
@@ -41,7 +41,7 @@ public class EnemiesManager : MonoBehaviour
 
     private void Start()
     {
-        //StartNextWave();
+
     }
 
     private void ResetAllEnemies()
@@ -66,9 +66,15 @@ public class EnemiesManager : MonoBehaviour
     #region WAVES
     public void StartNextWave()
     {
+        // Reset
+        ResetAllEnemies();
         enemiesSpawned = 0;
+
+        // Set New Wave stats
         currentWave++;
         LevelUpEnemies();
+
+        // Spawn
         SpawnAtLeastOneOfEachEnemy();
         while (!AllEnemiesAreSpawned())
         {
@@ -138,9 +144,21 @@ public class EnemiesManager : MonoBehaviour
 
     private void LevelUpEnemies()
     {
-        int lvlUp = currentWave % levelUpEnemiesEveryXWaves;
+        int lvlUp = currentWave / levelUpEnemiesEveryXWaves;
+
+        print("lvlUP: " + lvlUp);
 
         foreach (Enemy enemy in enemiesPool1)
+        {
+            enemy.level = lvlUp + 1;
+        }
+
+        foreach (Enemy enemy in enemiesPool2)
+        {
+            enemy.level = lvlUp + 1;
+        }
+
+        foreach (Enemy enemy in enemiesPool3)
         {
             enemy.level = lvlUp + 1;
         }

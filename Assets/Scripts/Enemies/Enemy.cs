@@ -9,10 +9,13 @@ public class Enemy : MonoBehaviour
     [Header("Enemy Base Stats")]
     public int level;
     public int enemyHealth;
+    private int realHealth;
     public float enemySpeed;
+    private float realSpeed;
 
     [Header("Enemy Attack Stats")]
     public int enemyDamage;
+    private int realDamage;
     public int fireRate;
     public int attackRange;
     private bool isPlayerInRange;
@@ -32,10 +35,21 @@ public class Enemy : MonoBehaviour
 
 
     // UNITY FUNCTIONS
-    private void Start()
+    private void OnEnable()
     {
         attackRangeCollider.radius = attackRange;
+        SetPlayerStats();
+
         SetDestinationToPlayer();
+    }
+
+    private void SetPlayerStats()
+    {
+        realHealth = enemyHealth + addHealth * (level - 1);
+        realSpeed = enemySpeed + addSpeed * (level - 1);
+        realDamage = enemyDamage + addDamage * (level - 1);
+
+        enemyAgent.speed = realSpeed;
     }
 
     private void Update()
@@ -61,19 +75,17 @@ public class Enemy : MonoBehaviour
     #region STATS
     public void TakeDamage(int damage)
     {
-        enemyHealth -= damage;
+        realHealth -= damage;
         CheckIfIsDead();
     }
 
     private void CheckIfIsDead()
     {
-        if (enemyHealth <= 0)
+        if (realHealth <= 0)
         {
             gameObject.SetActive(false);
         }
     }
-
-    public int GetEnemyHealth() { return enemyHealth; }
     #endregion
 
     #region MOVEMENT
@@ -92,6 +104,8 @@ public class Enemy : MonoBehaviour
     #region ATTACK
     private IEnumerator AttackPlayer()
     {
+        // TODO OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+        // start animation
         yield return new WaitForSeconds(fireRate);
 
         //player.DamagePlayer(enemyDamage);

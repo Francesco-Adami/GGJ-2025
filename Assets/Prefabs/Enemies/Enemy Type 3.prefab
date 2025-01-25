@@ -132,12 +132,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6b5f889d39e42f489ada8e37d431987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: 0
-  enemyHealth: 0
-  enemySpeed: 0
-  enemyDamage: 0
-  fireRate: 0
-  attackRange: 0
+  level: 1
+  enemyHealth: 30
+  enemySpeed: 1
+  enemyDamage: 1
+  fireRate: 3
+  attackRange: 1
+  addHealth: 3
+  addDamage: 3
+  addSpeed: 3
   enemyAgent: {fileID: 747319078441262054}
   attackRangeCollider: {fileID: 2582541189694482746}
   playerPosition: {x: 0, y: 0, z: 0}

@@ -47,7 +47,7 @@ public class UIManager : MonoBehaviour
             RegisterUI(enumeratedUI.GetUIType(), enumeratedUI);
         }
 
-        ShowUI(startingGameUI); // TODO -> SHOW MAIN MENU FIRST
+        ShowUI(startingGameUI);
     }
 
     public void ShowUI(GameUI uiType)
