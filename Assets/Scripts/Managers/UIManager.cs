@@ -6,15 +6,10 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     #region SINGLETON
-    private static UIManager Instance;
-    public static UIManager instance
+    private static UIManager instance;
+    public static UIManager Instance
     {
-        get
-        {
-            if (Instance == null)
-                Instance = FindAnyObjectByType<UIManager>();
-            return Instance;
-        }
+        get { return instance; }
     }
     #endregion
 
@@ -38,7 +33,16 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        foreach(IGameUI enumeratedUI in UIContainer.GetComponentsInChildren<IGameUI>(true))
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+
+        foreach (IGameUI enumeratedUI in UIContainer.GetComponentsInChildren<IGameUI>(true))
         {
             RegisterUI(enumeratedUI.GetUIType(), enumeratedUI);
         }
