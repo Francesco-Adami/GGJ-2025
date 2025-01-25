@@ -527,7 +527,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd0041000134f4d40ab9bf85698ea725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  point: {fileID: 1722164916}
+  xSense: 50
+  ySense: 50
+  point: {fileID: 109727848}
   player: {fileID: 1641548267}
 --- !u!1 &851784094
 GameObject:
@@ -1034,9 +1036,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   maxSpeed: 5
-  speedRotation: 0
+  fireRate: 1
   firePoint: {fileID: 5876926}
-  projectile: {fileID: 4181250826877771643, guid: 1ae45332bb82be4429e831fe98e9b366,
+  projectilePrefab: {fileID: 4181250826877771643, guid: 1ae45332bb82be4429e831fe98e9b366,
     type: 3}
 --- !u!54 &1641548269
 Rigidbody:

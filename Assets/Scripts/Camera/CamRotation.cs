@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    float xRotation;
-    float yRotation;
+    [Header("Cam sensibility")]
+    [SerializeField] private float xSense;
+    [SerializeField] private float ySense;
+
+    private float xRotation;
+    private float yRotation;
 
     public Transform point;
     public Transform player;
@@ -16,8 +20,8 @@ public class PlayerMovement : MonoBehaviour
         transform.position = point.position;
         transform.rotation = point.rotation;
 
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * 100;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * 100;
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * xSense;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * ySense;
 
         yRotation += mouseY;
         xRotation += mouseX;

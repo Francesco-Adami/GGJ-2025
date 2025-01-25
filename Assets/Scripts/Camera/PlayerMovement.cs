@@ -7,13 +7,15 @@ public class NewBehaviourScript : MonoBehaviour
     [Header("Player settings")]
     [SerializeField] private float speed;
     [SerializeField] private float maxSpeed;
-    [SerializeField] private float speedRotation;
 
     private Rigidbody playerRb;
-
+    private float fireCooldown = 0f;
+    [SerializeField] private float fireRate = 1f;
 
     public Transform firePoint;
-    public GameObject projectile;
+    public GameObject projectilePrefab;
+
+    private bool enableShoot = false;
 
     private void Awake()
     {
@@ -23,10 +25,8 @@ public class NewBehaviourScript : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        if (Input.GetMouseButtonDown(0))
-        {
-            Instantiate(projectile, firePoint.position, firePoint.rotation);
-        }
+        Cooldown();
+        Shoot();
     }
 
     private void Move()
@@ -40,4 +40,28 @@ public class NewBehaviourScript : MonoBehaviour
         movement = transform.right * Input.GetAxis("Horizontal") * speed;
         playerRb.AddForce(movement, ForceMode.Force);
     }
+
+    protected void Cooldown()
+    {
+        if (enableShoot) return;
+        fireCooldown -= Time.deltaTime;
+
+        if (fireCooldown <= 0f)
+        {
+            enableShoot = true;
+        }
+    }
+    
+    private void Shoot() 
+    {
+        if (Input.GetMouseButton(0))
+        {
+            if (enableShoot)
+            {
+                Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+                fireCooldown = 1f / fireRate;
+                enableShoot = false;
+            }
+        }
+    }    
 }
