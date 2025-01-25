@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
 
     // Enemy Target
     public Vector3 playerPosition;
-    // private playerClass player;
+    private PlayerManager player;
 
 
     // UNITY FUNCTIONS
@@ -91,7 +91,8 @@ public class Enemy : MonoBehaviour
     #region MOVEMENT
     public void SetDestinationToPlayer()
     {
-        playerPosition = FindAnyObjectByType<PlayerTest>().transform.position;
+        player = FindAnyObjectByType<PlayerManager>();
+        playerPosition = player.transform.position;
     }
 
     private void MoveToPlayer()
@@ -108,7 +109,7 @@ public class Enemy : MonoBehaviour
         // start animation
         yield return new WaitForSeconds(fireRate);
 
-        //player.DamagePlayer(enemyDamage);
+        player.DamagePlayer(enemyDamage);
     }
     #endregion
 
