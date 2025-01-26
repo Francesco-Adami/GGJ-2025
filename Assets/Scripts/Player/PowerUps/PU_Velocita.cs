@@ -16,5 +16,7 @@ public class PU_Velocita : MonoBehaviour
             PowerUpManager.Instance.RemovePUCompleted(gameObject);
         }
         UIManager.Instance.ShowUI(UIManager.GameUI.InGame);
+        GameManager.Instance.isGameStarted = true;
+        EnemiesManager.Instance.StartNextWave();
     }
 }

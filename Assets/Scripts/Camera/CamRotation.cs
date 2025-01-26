@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        
     }
 
     // Update is called once per frame
@@ -36,11 +36,11 @@ public class PlayerMovement : MonoBehaviour
 
 
         //xRotation = Mathf.Clamp(xRotation,-90,90);
-        yRotation = Mathf.Clamp(yRotation, -90, 90);
+        yRotation = Mathf.Clamp(yRotation, -45, 45);
 
         //player.rotation = Quaternion.Euler(0, xRotation, 0);
         player.Rotate(new Vector3(0, mouseX, 0));
-        point.Rotate(new Vector3(-mouseY, 0, 0));
+        point.Rotate(new Vector3(mouseY, 0, 0));
         gun.Rotate(new Vector3(0, 0, -mouseY));
         head.Rotate(new Vector3(0, 0, mouseY));
         //gun.rotation = Quaternion.Euler(-yRotation, xRotation, 0);

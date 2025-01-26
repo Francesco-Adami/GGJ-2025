@@ -18,5 +18,7 @@ public class PU_Vita : MonoBehaviour
         }
 
         UIManager.Instance.ShowUI(UIManager.GameUI.InGame);
+        GameManager.Instance.isGameStarted = true;
+        EnemiesManager.Instance.StartNextWave();
     }
 }

@@ -68,6 +68,7 @@ public class Enemy : MonoBehaviour
     public void SpawnEnemy(Vector3 spawnPosition)
     {
         transform.position = spawnPosition;
+        player = FindAnyObjectByType<PlayerManager>();
         gameObject.SetActive(true);
         SetDestinationToPlayer();
     }
@@ -96,12 +97,13 @@ public class Enemy : MonoBehaviour
     #region MOVEMENT
     public void SetDestinationToPlayer()
     {
-        player = FindAnyObjectByType<PlayerManager>();
+        if (player == null) return;
         playerPosition = player.transform.position;
     }
 
     private void MoveToPlayer()
     {
+        SetDestinationToPlayer();
         enemyAgent.SetDestination(playerPosition);
     }
 

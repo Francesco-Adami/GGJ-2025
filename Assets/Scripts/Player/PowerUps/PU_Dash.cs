@@ -11,5 +11,7 @@ public class PU_Dash : MonoBehaviour
 
         PowerUpManager.Instance.RemovePUCompleted(gameObject);
         UIManager.Instance.ShowUI(UIManager.GameUI.InGame);
+        GameManager.Instance.isGameStarted = true;
+        EnemiesManager.Instance.StartNextWave();
     }
 }

@@ -70,7 +70,7 @@ public class PlayerManager : MonoBehaviour
             composer = virtualCamera.GetCinemachineComponent<CinemachineComposer>();
         }
 
-        Cursor.lockState = CursorLockMode.Locked;
+        
 
         currentHealth = maxHealth;
         ReloadBullets();
@@ -78,6 +78,9 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.Instance.isGameStarted) return;
+        else Cursor.lockState = CursorLockMode.Locked;
+
         if ((Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.LeftShift)) && canDash)
         {
             Dash();
@@ -125,7 +128,7 @@ public class PlayerManager : MonoBehaviour
     #region MOVEMENT
     private void Move()
     {
-        movement = ((transform.forward * Input.GetAxis("Vertical")) + transform.right * Input.GetAxis("Horizontal")) * speed;
+        movement = ((transform.forward * Input.GetAxis("Vertical")) + transform.right * Input.GetAxis("Horizontal")) * speed * Time.deltaTime;
         playerRb.AddForce(movement, ForceMode.VelocityChange);
 
 
@@ -143,7 +146,7 @@ public class PlayerManager : MonoBehaviour
         {
             // Modifica l'offset verticale del Cinemachine Composer
             float newVerticalOffset = composer.m_ScreenY - mouseY;
-            composer.m_ScreenY = Mathf.Clamp(newVerticalOffset, 0.5f - verticalRotationLimit / 90f, 0.5f + verticalRotationLimit / 90f);
+            composer.m_ScreenY = Mathf.Clamp(newVerticalOffset, 0.5f - verticalRotationLimit / 90f, 0.5f + verticalRotationLimit / 60f);
         }
     }
     #endregion
@@ -166,10 +169,8 @@ public class PlayerManager : MonoBehaviour
         {
             if (enableShoot)
             {
-                // TODO REMOVE COMMENT
-                //SpawnBullet(firePoint.position, firePoint.rotation);
+                SpawnBullet(firePoint.position, firePoint.rotation);
                 fireCooldown = 1f / fireRate;
-                print("FireRate: " + fireRate);
                 enableShoot = false;
             }
         }

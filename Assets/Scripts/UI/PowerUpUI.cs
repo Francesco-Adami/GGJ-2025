@@ -22,9 +22,20 @@ public class PowerUpUI : MonoBehaviour, IGameUI
     {
         PowerUpManager.Instance.Get3RandomPowerUps();
 
+        foreach (Transform child in horizontalLayout)
+        {
+            Destroy(child.gameObject);
+        }
+
         for (int i = 0; i < 3; i++)
         {
             Instantiate(PowerUpManager.Instance.puList[i], horizontalLayout);
         }
+    }
+
+    public void StartNextWave()
+    {
+        GameManager.Instance.isGameStarted = true;
+        UIManager.Instance.ShowUI(UIManager.GameUI.InGame);
     }
 }

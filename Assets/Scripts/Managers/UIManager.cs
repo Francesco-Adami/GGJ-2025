@@ -51,6 +51,7 @@ public class UIManager : MonoBehaviour
             RegisterUI(enumeratedUI.GetUIType(), enumeratedUI);
         }
 
+        GameManager.Instance.isGameStarted = false;
         ShowUI(startingGameUI);
     }
 

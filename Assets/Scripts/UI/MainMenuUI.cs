@@ -24,4 +24,13 @@ public class MainMenuUI : MonoBehaviour, IGameUI
     {
         UIManager.Instance.ShowUI(UIManager.GameUI.PowerUps);
     }
+
+    public void StartGame()
+    {
+        UIManager.Instance.ShowUI(UIManager.GameUI.InGame);
+        GameManager.Instance.isGameStarted = true;
+        EnemiesManager.Instance.StartNextWave();
+    }
+
+
 }

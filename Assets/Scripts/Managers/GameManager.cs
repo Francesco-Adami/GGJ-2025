@@ -29,12 +29,19 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        
+        if (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P))
+        {
+            isGameStarted = false;
+            Cursor.lockState = CursorLockMode.None;
+            UIManager.Instance.ShowUI(UIManager.GameUI.Pause);
+        }
+
     }
 
     public void WaveFinished()
     {
         UIManager.Instance.ShowUI(UIManager.GameUI.PowerUps);
+        Cursor.lockState = CursorLockMode.None;
         isGameStarted = false;
     }
 }

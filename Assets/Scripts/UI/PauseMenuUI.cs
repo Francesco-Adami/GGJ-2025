@@ -14,4 +14,10 @@ public class PauseMenuUI : MonoBehaviour, IGameUI
     {
         gameObject.SetActive(active);
     }
+
+    public void ResumeGame()
+    {
+        GameManager.Instance.isGameStarted = true;
+        UIManager.Instance.ShowUI(UIManager.GameUI.InGame);
+    }
 }
