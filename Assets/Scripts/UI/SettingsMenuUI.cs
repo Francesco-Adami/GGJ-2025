@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SettingsMenuUI : MonoBehaviour, IGameUI
 {
     public UIManager.GameUI type;
-    //private GameObject openedBy;
+    private GameObject openedBy;
     public UIManager.GameUI GetUIType()
     {
         return type;
@@ -32,11 +32,22 @@ public class SettingsMenuUI : MonoBehaviour, IGameUI
         Screen.fullScreen = mode.isOn;
     }
 
-    /*public void SetOpenedBy(GameObject obj) 
+    public void SetMouseSensitivity(Slider slider) 
+    {
+        //mouseSense = slider.value;
+    }
+
+    public void SetOpenedBy(GameObject obj) 
     {
         openedBy = obj;
     }
 
+    public void GetBack()
+    {
+        openedBy.SetActive(true);
+    }
+
+    /*
     public GameObject GetOpenedBy()
     {
         return openedBy;
