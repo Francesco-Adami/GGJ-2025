@@ -54,6 +54,7 @@ public class PlayerManager : MonoBehaviour
 
     [Header("Animator")]
     public Animator animator;
+    //public Animator animator2;
 
 
     private void Awake()
@@ -136,10 +137,12 @@ public class PlayerManager : MonoBehaviour
         if (movement.magnitude > 0)
         {
             animator.SetBool("velocity", true);
+            //animator2.SetBool("velocity", true);
         }
         else
         {
             animator.SetBool("velocity", false);
+            //animator2.SetBool("velocity", false);
         }
     }
 
