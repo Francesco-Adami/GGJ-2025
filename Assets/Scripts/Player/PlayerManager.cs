@@ -255,6 +255,7 @@ public class PlayerManager : MonoBehaviour
         {
             SoundManager.Instance.PlayMusic(LoseClip);
             GameManager.Instance.ResetAll();
+            GameManager.Instance.PlayerDead();
         }
     }
 }

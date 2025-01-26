@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     public bool isGameStarted = false;
 
+    public GameObject scenaStart;
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -50,7 +51,16 @@ public class GameManager : MonoBehaviour
         PlayerManager.Instance.ReloadBullets();
         PowerUpManager.Instance.ResetPowerUp();
         EnemiesManager.Instance.ResetWaves();
+    }
+
+    public void PlayerDead()
+    {
         Cursor.lockState = CursorLockMode.None;
         UIManager.Instance.ShowUI(UIManager.GameUI.Lose);
+    }
+
+    public void SetActiveStartScene(bool active)
+    {
+        scenaStart.SetActive(active);
     }
 }
