@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
         
         float YaxisRotation = Input.GetAxis("Mouse Y") *Time.fixedDeltaTime * ySense;
         xRotation -= YaxisRotation;
-        xRotation = Mathf.Clamp(xRotation, -40f, 40f);
+        xRotation = Mathf.Clamp(xRotation, -30f, 30f);
         gun.localRotation = Quaternion.Euler(0, xRotation, -90f);
         head.localRotation = Quaternion.Euler(0, 0, -xRotation);
     }

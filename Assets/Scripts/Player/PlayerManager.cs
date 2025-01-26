@@ -162,8 +162,8 @@ public class PlayerManager : MonoBehaviour
         {
             // Modifica l'offset verticale del Cinemachine Composer
             float newVerticalOffset = composer.m_ScreenY - mouseY;
-            composer.m_ScreenY = Mathf.Clamp(newVerticalOffset, 0.5f - verticalRotationLimit / 90f, 0.5f + verticalRotationLimit / 60f);
-            //composer.m_ScreenY = Mathf.Clamp(newVerticalOffset, 0.5f - verticalRotationLimit / 270f, 0.5f + verticalRotationLimit / 40f);
+            //composer.m_ScreenY = Mathf.Clamp(newVerticalOffset, 0.5f - verticalRotationLimit / 90f, 0.5f + verticalRotationLimit / 60f);
+            composer.m_ScreenY = Mathf.Clamp(newVerticalOffset, 0.5f - verticalRotationLimit / 240f, 0.5f + verticalRotationLimit / 50f);
         }
     }
 
