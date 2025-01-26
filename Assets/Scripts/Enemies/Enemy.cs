@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
     // Enemy Target
     public Vector3 playerPosition;
     private PlayerManager player;
+    private bool canAttack = true;
 
 
     // UNITY FUNCTIONS
@@ -54,7 +55,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (isPlayerInRange)
+        if (isPlayerInRange && canAttack)
         {
             StartCoroutine(AttackPlayer());
         }
@@ -114,9 +115,11 @@ public class Enemy : MonoBehaviour
     {
         // TODO OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
         // start animation
+        canAttack = false;
         yield return new WaitForSeconds(fireRate);
 
         player.DamagePlayer(enemyDamage);
+        canAttack = true;
     }
     #endregion
 
