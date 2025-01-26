@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
         Controls,
         PowerUps,
         Lose,
+        Credits
     }
 
     private Dictionary<GameUI, IGameUI> registeredUIs = new Dictionary<GameUI, IGameUI>();
