@@ -93,7 +93,6 @@ MonoBehaviour:
   mouseSensitivity: 1
   verticalRotationLimit: 30
   animator: {fileID: 5758219823205263622}
-  animator2: {fileID: 0}
 --- !u!54 &6067293505446541569
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -498,7 +497,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -876546973899608171, guid: b01ed461c124d8849a1fe0fc46c0a6e5,
+      objectReference: {fileID: -876546973899608171, guid: a3c6bc867f74a9a4ca54aa441b31e84d,
         type: 3}
     - target: {fileID: -6678332159379564722, guid: 5e093af58a1a0c14395d0dd5ab7ec5c2,
         type: 3}
@@ -551,13 +550,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -876546973899608171, guid: f30dafc1fdfdd5d4abf6b0bc9b78c6b9,
+      objectReference: {fileID: -876546973899608171, guid: f1126a52446997e46ab627e5faa14dac,
         type: 3}
     - target: {fileID: 1123054084368432229, guid: 5e093af58a1a0c14395d0dd5ab7ec5c2,
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: -876546973899608171, guid: 6ea00b16bdb5c844680d676ecaea69ea,
+      objectReference: {fileID: -876546973899608171, guid: f1126a52446997e46ab627e5faa14dac,
         type: 3}
     - target: {fileID: 1724825707189983372, guid: 5e093af58a1a0c14395d0dd5ab7ec5c2,
         type: 3}

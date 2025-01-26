@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   enemyHealth: 30
-  enemySpeed: 1
+  enemySpeed: 3
   enemyDamage: 1
   fireRate: 3
   attackRange: 1
@@ -341,7 +341,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -876546973899608171, guid: 4f7e8df1f32234f43bd8b976e7bd2b2a,
+      objectReference: {fileID: -876546973899608171, guid: f30dafc1fdfdd5d4abf6b0bc9b78c6b9,
         type: 3}
     - target: {fileID: 882129737928793925, guid: 0fa0f0a1b6e257c46ae219ed269173f6,
         type: 3}
