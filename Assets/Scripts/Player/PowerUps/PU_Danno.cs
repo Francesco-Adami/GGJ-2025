@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class PU_Danno : MonoBehaviour
 {
-    public int addDamage;
+    public int level;
+    public int[] addDamage;
 
     public void AcquirePowerUp()
     {
-        PowerUpManager.Instance.powerUpDanno = this;
+        PowerUpManager.Instance.SetNewDamage(addDamage[level]);
+        level++;
+        if (level >= addDamage.Length)
+        {
+            PowerUpManager.Instance.RemovePUCompleted(gameObject);
+        }
+        UIManager.Instance.ShowUI(UIManager.GameUI.InGame);
     }
 }

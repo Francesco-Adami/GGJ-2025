@@ -1,3 +1,5 @@
+using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,18 +18,15 @@ public class PlayerManager : MonoBehaviour
     [Header("Player info")]
     public int maxHealth;
     [HideInInspector] public int currentHealth;
-
-    [Header("Player settings")]
-    [SerializeField] private float speed;
-    [SerializeField] private float maxSpeed;
+    public float speed;
+    //[SerializeField] private float maxSpeed;
 
     private Rigidbody playerRb;
     private float fireCooldown = 0f;
-    [SerializeField] private float fireRate = 1f;
 
     [Header("Player Attack")]
+    public float fireRate = 1f;
     public Transform firePoint;
-    //public GameObject projectilePrefab;
     public int playerDamage;
 
     [Header("Projectile pool")]
@@ -35,8 +34,19 @@ public class PlayerManager : MonoBehaviour
     public List<Projectile> projectiles;
     private bool isReloading;
 
-
+    Vector3 movement;
     private bool enableShoot = false;
+
+    [Header("Player PowerUps")]
+    public bool canDash = false;
+    [SerializeField] private float dashCooldown;
+    [SerializeField] private float dashForce;
+
+    [Header("Player Camera")]
+    public float mouseSensitivity = 100f;
+    public float verticalRotationLimit = 80f;
+    private CinemachineVirtualCamera virtualCamera;
+    private CinemachineComposer composer;
 
     private void Awake()
     {
@@ -54,15 +64,31 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
+        virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        if (virtualCamera != null)
+        {
+            composer = virtualCamera.GetCinemachineComponent<CinemachineComposer>();
+        }
+
+        Cursor.lockState = CursorLockMode.Locked;
+
         currentHealth = maxHealth;
         ReloadBullets();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (currentHealth > maxHealth) currentHealth = maxHealth;
+        if ((Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.LeftShift)) && canDash)
+        {
+            Dash();
+        }
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
 
         Move();
+        RotateWithMouse();
         Cooldown();
         Shoot();
 
@@ -73,15 +99,54 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        
+    }
+
+    #region DASH
+    private void Dash()
+    {
+        if (movement.magnitude == 0)
+            movement = Vector3.forward * speed;    
+        playerRb.AddForce(movement * dashForce, ForceMode.Impulse);
+        canDash = false;
+        StartCoroutine(DashRoutine());
+    }
+
+    private IEnumerator DashRoutine()
+    {
+        yield return new WaitForSeconds(dashCooldown);
+
+        canDash = true;
+    }
+    #endregion
+
+    #region MOVEMENT
     private void Move()
     {
-        // movement = ((transform.forward * Input.GetAxis("Vertical")) + transform.right * Input.GetAxis("Horizontal")) * speed;
-        Vector3 movement;
-        movement = transform.forward * Input.GetAxis("Vertical") * speed;
-        playerRb.AddForce(movement, ForceMode.Force);
-        movement = transform.right * Input.GetAxis("Horizontal") * speed;
-        playerRb.AddForce(movement, ForceMode.Force);
+        movement = ((transform.forward * Input.GetAxis("Vertical")) + transform.right * Input.GetAxis("Horizontal")) * speed;
+        playerRb.AddForce(movement, ForceMode.VelocityChange);
+
+
     }
+
+    private void RotateWithMouse()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = -(Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime);
+
+        // Ruota il giocatore sull'asse Y (orizzontale)
+        transform.Rotate(Vector3.up * mouseX * 20);
+
+        if (composer != null)
+        {
+            // Modifica l'offset verticale del Cinemachine Composer
+            float newVerticalOffset = composer.m_ScreenY - mouseY;
+            composer.m_ScreenY = Mathf.Clamp(newVerticalOffset, 0.5f - verticalRotationLimit / 90f, 0.5f + verticalRotationLimit / 90f);
+        }
+    }
+    #endregion
 
     #region SHOOT
     protected void Cooldown()
@@ -101,9 +166,10 @@ public class PlayerManager : MonoBehaviour
         {
             if (enableShoot)
             {
-                SpawnBullet(firePoint.position, firePoint.rotation);
-                // Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+                // TODO REMOVE COMMENT
+                //SpawnBullet(firePoint.position, firePoint.rotation);
                 fireCooldown = 1f / fireRate;
+                print("FireRate: " + fireRate);
                 enableShoot = false;
             }
         }
@@ -148,7 +214,7 @@ public class PlayerManager : MonoBehaviour
 
     public int GetPlayerDamage()
     {
-        return playerDamage + PowerUpManager.Instance.powerUpDanno.addDamage;
+        return playerDamage;
     }
 
     public void DamagePlayer(int damage)

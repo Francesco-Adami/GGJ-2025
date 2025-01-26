@@ -83,6 +83,11 @@ public class Enemy : MonoBehaviour
     {
         if (realHealth <= 0)
         {
+            EnemiesManager.Instance.enemiesSpawned--;
+            if (EnemiesManager.Instance.IsWaveFinished())
+            {
+                GameManager.Instance.WaveFinished();
+            }
             gameObject.SetActive(false);
         }
     }
