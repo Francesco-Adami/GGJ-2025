@@ -46,12 +46,14 @@ public class PlayerManager : MonoBehaviour
     [Header("Player Camera")]
     public float mouseSensitivity = 100f;
     public float verticalRotationLimit = 80f;
-    public Transform point;
-    public Transform head;
+    //public Transform point;
+    //public Transform head;
 
     private CinemachineVirtualCamera virtualCamera;
     private CinemachineComposer composer;
-    private float yRotation = 0f;
+
+    [Header("Animator")]
+    public Animator animator;
 
 
     private void Awake()
@@ -108,11 +110,6 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        
-    }
-
     #region DASH
     private void Dash()
     {
@@ -136,8 +133,14 @@ public class PlayerManager : MonoBehaviour
     {
         movement = ((transform.forward * Input.GetAxis("Vertical")) + transform.right * Input.GetAxis("Horizontal")) * speed * Time.deltaTime;
         playerRb.AddForce(movement, ForceMode.VelocityChange);
-
-
+        if (movement.magnitude > 0)
+        {
+            animator.SetBool("velocity", true);
+        }
+        else
+        {
+            animator.SetBool("velocity", false);
+        }
     }
 
     private void RotateWithMouse()
@@ -155,17 +158,6 @@ public class PlayerManager : MonoBehaviour
             composer.m_ScreenY = Mathf.Clamp(newVerticalOffset, 0.5f - verticalRotationLimit / 90f, 0.5f + verticalRotationLimit / 60f);
             //composer.m_ScreenY = Mathf.Clamp(newVerticalOffset, 0.5f - verticalRotationLimit / 270f, 0.5f + verticalRotationLimit / 40f);
         }
-
-        /*
-        // Rotazione verticale personalizzata
-        yRotation += mouseY; // Aggiorna yRotation basandoti sull'input del mouse
-        print(yRotation);
-        yRotation = Mathf.Clamp(mouseY, -10, 10); // Limita la rotazione verticale tra -90 e 90 gradi
-        
-        // Applica la rotazione limitata ai punti definiti
-        point.rotation = Quaternion.Euler(yRotation, 0, 0);
-        //head.rotation = Quaternion.Euler(yRotation, 0, 0);
-        */
     }
 
     #endregion
@@ -202,6 +194,16 @@ public class PlayerManager : MonoBehaviour
             if (!p.gameObject.activeInHierarchy) return p;
         }
         return null;
+    }
+
+    public int GetAvailableBullets()
+    {
+        int i = 0;
+        foreach (Projectile p in projectiles)
+        {
+            if (!p.gameObject.activeInHierarchy) i++;
+        }
+        return i;
     }
 
     public void SpawnBullet(Vector3 position, Quaternion rotation)
@@ -242,7 +244,7 @@ public class PlayerManager : MonoBehaviour
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
-            print("Sei morto");
+            GameManager.Instance.ResetAll();
         }
     }
 }

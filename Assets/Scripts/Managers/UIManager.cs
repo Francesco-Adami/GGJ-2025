@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
         Pause,
         Controls,
         PowerUps,
+        Lose,
     }
 
     private Dictionary<GameUI, IGameUI> registeredUIs = new Dictionary<GameUI, IGameUI>();

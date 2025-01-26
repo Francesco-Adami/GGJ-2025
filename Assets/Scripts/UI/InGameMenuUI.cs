@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class InGameMenuUI : MonoBehaviour, IGameUI
 {
-    public TextMeshProUGUI textMeshProUGUI;
+    public TextMeshProUGUI nemiciRimasti;
+    public TextMeshProUGUI munizioni;
+    public TextMeshProUGUI vitaSuVitaTot;
 
     public UIManager.GameUI type;
     public UIManager.GameUI GetUIType()
@@ -20,6 +22,8 @@ public class InGameMenuUI : MonoBehaviour, IGameUI
 
     private void Update()
     {
-        textMeshProUGUI.text = "Nemici Rimasti: " + EnemiesManager.Instance.enemiesSpawned;
+        nemiciRimasti.text = "Nemici Rimasti: " + EnemiesManager.Instance.enemiesSpawned;
+        munizioni.text = PlayerManager.Instance.GetAvailableBullets() + " / " + PlayerManager.Instance.projectiles.Count;
+        vitaSuVitaTot.text = PlayerManager.Instance.currentHealth + " / " + PlayerManager.Instance.maxHealth;
     }
 }

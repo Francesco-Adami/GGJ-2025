@@ -52,7 +52,7 @@ MonoBehaviour:
   currentHealth: 0
   speed: 100
   fireRate: 1
-  firePoint: {fileID: 733209248035341784}
+  firePoint: {fileID: 1848926210845494040}
   playerDamage: 5
   reloadTime: 5
   projectiles:
@@ -165,7 +165,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6961892239931998148}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: -0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.101, z: 0.561}
   m_LocalScale: {x: 2.05, y: 2.05, z: 2.05}
   m_ConstrainProportionsScale: 0

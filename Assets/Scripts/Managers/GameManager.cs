@@ -44,4 +44,13 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         isGameStarted = false;
     }
+
+    public void ResetAll()
+    {
+        PlayerManager.Instance.ReloadBullets();
+        PowerUpManager.Instance.ResetPowerUp();
+        EnemiesManager.Instance.ResetWaves();
+        UIManager.Instance.ShowUI(UIManager.GameUI.Lose);
+        Cursor.lockState = CursorLockMode.None;
+    }
 }

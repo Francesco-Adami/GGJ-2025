@@ -146,8 +146,6 @@ public class EnemiesManager : MonoBehaviour
     {
         int lvlUp = currentWave / levelUpEnemiesEveryXWaves;
 
-        print("lvlUP: " + lvlUp);
-
         foreach (Enemy enemy in enemiesPool1)
         {
             enemy.level = lvlUp + 1;
@@ -188,5 +186,11 @@ public class EnemiesManager : MonoBehaviour
     {
         int index = UnityEngine.Random.Range(0, spawnPoints.Count - 1);
         return spawnPoints[index].position;
+    }
+
+    public void ResetWaves()
+    {
+        currentWave = 0;
+        ResetAllEnemies();
     }
 }

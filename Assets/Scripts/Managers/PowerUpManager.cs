@@ -20,6 +20,14 @@ public class PowerUpManager : MonoBehaviour
     public List<GameObject> puList = new();
     private const int choosablePowerUp = 3;
 
+    public List<GameObject> backupList = new();
+
+    [Header("Backup variables")]
+    public int damage;
+    public int health;
+    public float speed;
+    public float fireRate;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -32,11 +40,18 @@ public class PowerUpManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        damage = PlayerManager.Instance.playerDamage;
+        health = PlayerManager.Instance.maxHealth;
+        speed = PlayerManager.Instance.speed;
+        fireRate = PlayerManager.Instance.fireRate;
+    }
+
     #region SET POWERUP
     public void SetNewDamage(int addDamage)
     {
         PlayerManager.Instance.playerDamage += addDamage;
-        print("MaxHealth: " + PlayerManager.Instance.playerDamage);
     }
 
     public void SetMaxHealth(int addHealth)
@@ -48,7 +63,6 @@ public class PowerUpManager : MonoBehaviour
     public void SetSpeed(int speedPercentage)
     {
         PlayerManager.Instance.speed += PlayerManager.Instance.speed * speedPercentage / 100;
-        print("Speed: " + PlayerManager.Instance.speed);
     }
 
     public void SetDash()
@@ -77,7 +91,9 @@ public class PowerUpManager : MonoBehaviour
 
         for (int i = 0; i < choosablePowerUp; i++)
         {
-            puList.Add(ChooseOneRandomPowerUp());
+            GameObject tmp = ChooseOneRandomPowerUp();
+            if (tmp != null)
+                puList.Add(tmp);
         }
     }
 
@@ -85,7 +101,17 @@ public class PowerUpManager : MonoBehaviour
     {
         GameObject a = puToChoose[UnityEngine.Random.Range(0, puToChoose.Count - 1)];
         puToChoose.Remove(a);
-        print("CHOOSE: " +  a.name);
         return a;
+    }
+
+    public void ResetPowerUp()
+    {
+        puPrefab.Clear();
+        puPrefab.AddRange(backupList);
+
+        PlayerManager.Instance.playerDamage = damage;
+        PlayerManager.Instance.maxHealth = health;
+        PlayerManager.Instance.speed = speed;
+        PlayerManager.Instance.fireRate = fireRate;
     }
 }
