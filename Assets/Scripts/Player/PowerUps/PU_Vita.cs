@@ -10,5 +10,11 @@ public class PU_Vita : MonoBehaviour
     public void AcquirePowerUp()
     {
         PowerUpManager.Instance.SetMaxHealth(addHealth[level]);
+
+        level++;
+        if (level >= addHealth.Length)
+        {
+            PowerUpManager.Instance.RemovePUCompleted(gameObject);
+        }
     }
 }

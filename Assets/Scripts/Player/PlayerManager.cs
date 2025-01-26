@@ -25,7 +25,7 @@ public class PlayerManager : MonoBehaviour
     private float fireCooldown = 0f;
 
     [Header("Player Attack")]
-    [SerializeField] private float fireRate = 1f;
+    public float fireRate = 1f;
     public Transform firePoint;
     public int playerDamage;
 
@@ -166,12 +166,10 @@ public class PlayerManager : MonoBehaviour
         {
             if (enableShoot)
             {
+                // TODO REMOVE COMMENT
                 //SpawnBullet(firePoint.position, firePoint.rotation);
-                float a;
-                if (PowerUpManager.Instance.powerUpFireRate == null) a = 0;
-                else a = PowerUpManager.Instance.powerUpFireRate.fireRate;
-                fireCooldown = 1f / (fireRate + (fireRate * a / 100));
-                print("FireRate: " + (fireRate + (fireRate * a / 100)));
+                fireCooldown = 1f / fireRate;
+                print("FireRate: " + fireRate);
                 enableShoot = false;
             }
         }

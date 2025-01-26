@@ -11,5 +11,9 @@ public class PU_Velocita : MonoBehaviour
     {
         PowerUpManager.Instance.SetSpeed(addSpeed[level]);
         level++;
+        if (level >= addSpeed.Length)
+        {
+            PowerUpManager.Instance.RemovePUCompleted(gameObject);
+        }
     }
 }

@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class PU_FireRate : MonoBehaviour
 {
-    public float fireRate;
+    public int level;
+    public float[] fireRate;
 
     public void AcquirePowerUp()
     {
-        PowerUpManager.Instance.powerUpFireRate = this;
+        PowerUpManager.Instance.SetFireRate(fireRate[level]);
+        level++;
+        if (level >= fireRate.Length)
+        {
+            PowerUpManager.Instance.RemovePUCompleted(gameObject);
+        }
     }
 }

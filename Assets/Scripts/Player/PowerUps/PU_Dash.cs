@@ -8,5 +8,7 @@ public class PU_Dash : MonoBehaviour
     public void AcquirePowerUp()
     {
         PowerUpManager.Instance.SetDash();
+
+        PowerUpManager.Instance.RemovePUCompleted(gameObject);
     }
 }

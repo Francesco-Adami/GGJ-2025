@@ -10,5 +10,10 @@ public class PU_Danno : MonoBehaviour
     public void AcquirePowerUp()
     {
         PowerUpManager.Instance.SetNewDamage(addDamage[level]);
+        level++;
+        if (level >= addDamage.Length)
+        {
+            PowerUpManager.Instance.RemovePUCompleted(gameObject);
+        }
     }
 }
