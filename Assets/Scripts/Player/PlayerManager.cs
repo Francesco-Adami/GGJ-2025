@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -41,6 +42,12 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private float dashCooldown;
     [SerializeField] private float dashForce;
 
+    [Header("Player Camera")]
+    public float mouseSensitivity = 100f;
+    public float verticalRotationLimit = 80f;
+    private CinemachineVirtualCamera virtualCamera;
+    private CinemachineComposer composer;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -57,6 +64,14 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
+        virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
+        if (virtualCamera != null)
+        {
+            composer = virtualCamera.GetCinemachineComponent<CinemachineComposer>();
+        }
+
+        Cursor.lockState = CursorLockMode.Locked;
+
         currentHealth = maxHealth;
         ReloadBullets();
     }
@@ -67,16 +82,13 @@ public class PlayerManager : MonoBehaviour
         {
             Dash();
         }
-    }
-
-    private void FixedUpdate()
-    {
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
         }
 
         Move();
+        RotateWithMouse();
         Cooldown();
         Shoot();
 
@@ -85,6 +97,11 @@ public class PlayerManager : MonoBehaviour
             print("Reloading");
             StartCoroutine(ReloadRoutine());
         }
+    }
+
+    private void FixedUpdate()
+    {
+        
     }
 
     #region DASH
@@ -105,15 +122,31 @@ public class PlayerManager : MonoBehaviour
     }
     #endregion
 
+    #region MOVEMENT
     private void Move()
     {
         movement = ((transform.forward * Input.GetAxis("Vertical")) + transform.right * Input.GetAxis("Horizontal")) * speed;
         playerRb.AddForce(movement, ForceMode.VelocityChange);
-        
-        //movement = transform.forward * Input.GetAxis("Vertical") * speed;
-        //movement = transform.right * Input.GetAxis("Horizontal") * speed;
-        //playerRb.AddForce(movement, ForceMode.Force);
+
+
     }
+
+    private void RotateWithMouse()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = -(Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime);
+
+        // Ruota il giocatore sull'asse Y (orizzontale)
+        transform.Rotate(Vector3.up * mouseX * 20);
+
+        if (composer != null)
+        {
+            // Modifica l'offset verticale del Cinemachine Composer
+            float newVerticalOffset = composer.m_ScreenY - mouseY;
+            composer.m_ScreenY = Mathf.Clamp(newVerticalOffset, 0.5f - verticalRotationLimit / 90f, 0.5f + verticalRotationLimit / 90f);
+        }
+    }
+    #endregion
 
     #region SHOOT
     protected void Cooldown()
