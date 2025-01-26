@@ -59,7 +59,7 @@ public class Enemy : MonoBehaviour
         {
             StartCoroutine(AttackPlayer());
         }
-        else
+        else if (GameManager.Instance.isGameStarted)
         {
             MoveToPlayer();
         }

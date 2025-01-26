@@ -2,6 +2,7 @@ using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -45,8 +46,13 @@ public class PlayerManager : MonoBehaviour
     [Header("Player Camera")]
     public float mouseSensitivity = 100f;
     public float verticalRotationLimit = 80f;
+    public Transform point;
+    public Transform head;
+
     private CinemachineVirtualCamera virtualCamera;
     private CinemachineComposer composer;
+    private float yRotation = 0f;
+
 
     private void Awake()
     {
@@ -147,8 +153,21 @@ public class PlayerManager : MonoBehaviour
             // Modifica l'offset verticale del Cinemachine Composer
             float newVerticalOffset = composer.m_ScreenY - mouseY;
             composer.m_ScreenY = Mathf.Clamp(newVerticalOffset, 0.5f - verticalRotationLimit / 90f, 0.5f + verticalRotationLimit / 60f);
+            //composer.m_ScreenY = Mathf.Clamp(newVerticalOffset, 0.5f - verticalRotationLimit / 270f, 0.5f + verticalRotationLimit / 40f);
         }
+
+        /*
+        // Rotazione verticale personalizzata
+        yRotation += mouseY; // Aggiorna yRotation basandoti sull'input del mouse
+        print(yRotation);
+        yRotation = Mathf.Clamp(mouseY, -10, 10); // Limita la rotazione verticale tra -90 e 90 gradi
+        
+        // Applica la rotazione limitata ai punti definiti
+        point.rotation = Quaternion.Euler(yRotation, 0, 0);
+        //head.rotation = Quaternion.Euler(yRotation, 0, 0);
+        */
     }
+
     #endregion
 
     #region SHOOT
