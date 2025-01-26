@@ -136,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   enemyHealth: 15
-  enemySpeed: 3
+  enemySpeed: 4
   enemyDamage: 5
   fireRate: 5
   attackRange: 5
