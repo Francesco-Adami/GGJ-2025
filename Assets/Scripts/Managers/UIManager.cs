@@ -17,8 +17,11 @@ public class UIManager : MonoBehaviour
     public enum GameUI
     {
         NONE,
-        MainMenu,
+        Main,
         InGame,
+        Settings,
+        Pause,
+        Controls
     }
 
     private Dictionary<GameUI, IGameUI> registeredUIs = new Dictionary<GameUI, IGameUI>();
