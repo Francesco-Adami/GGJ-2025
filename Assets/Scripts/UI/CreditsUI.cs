@@ -14,4 +14,9 @@ public class CreditsUI : MonoBehaviour, IGameUI
     {
         gameObject.SetActive(active);
     }
+
+    public void GoBackToMain()
+    {
+        UIManager.Instance.ShowUI(UIManager.GameUI.Main);
+    }
 }

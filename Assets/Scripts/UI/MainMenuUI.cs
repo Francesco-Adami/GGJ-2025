@@ -25,6 +25,11 @@ public class MainMenuUI : MonoBehaviour, IGameUI
         UIManager.Instance.ShowUI(UIManager.GameUI.PowerUps);
     }
 
+    public void GoToCredits()
+    {
+        UIManager.Instance.ShowUI(UIManager.GameUI.Credits);
+    }
+
     public void StartGame()
     {
         UIManager.Instance.ShowUI(UIManager.GameUI.InGame);
