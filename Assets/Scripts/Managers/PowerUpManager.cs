@@ -15,9 +15,9 @@ public class PowerUpManager : MonoBehaviour
     #endregion
 
     [Header("UI PowerUp Prefab")]
-    public List<GameObject> puPrefab;
-    private List<GameObject> puToChoose;
-    private List<GameObject> puList;
+    public List<GameObject> puPrefab = new();
+    private List<GameObject> puToChoose = new();
+    public List<GameObject> puList = new();
     private const int choosablePowerUp = 3;
 
     private void Awake()
@@ -69,6 +69,7 @@ public class PowerUpManager : MonoBehaviour
 
     public void Get3RandomPowerUps()
     {
+        puList.Clear();
         foreach (GameObject gameObject in puPrefab)
         {
             puToChoose.Add(gameObject);

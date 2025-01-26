@@ -15,5 +15,6 @@ public class PU_FireRate : MonoBehaviour
         {
             PowerUpManager.Instance.RemovePUCompleted(gameObject);
         }
+        UIManager.Instance.ShowUI(UIManager.GameUI.InGame);
     }
 }

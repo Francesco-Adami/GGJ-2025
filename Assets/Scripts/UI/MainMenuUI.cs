@@ -19,4 +19,9 @@ public class MainMenuUI : MonoBehaviour, IGameUI
     {
         Application.Quit();
     }
+
+    public void GoToPowerUp()
+    {
+        UIManager.Instance.ShowUI(UIManager.GameUI.PowerUps);
+    }
 }

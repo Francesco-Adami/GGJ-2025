@@ -178,6 +178,12 @@ public class EnemiesManager : MonoBehaviour
         return null;
     }
 
+    public bool IsWaveFinished()
+    {
+        if (enemiesSpawned <= 0) return true;
+        return false;
+    }
+
     private Vector3 GetRandomSpawnPoint()
     {
         int index = UnityEngine.Random.Range(0, spawnPoints.Count - 1);

@@ -16,5 +16,7 @@ public class PU_Vita : MonoBehaviour
         {
             PowerUpManager.Instance.RemovePUCompleted(gameObject);
         }
+
+        UIManager.Instance.ShowUI(UIManager.GameUI.InGame);
     }
 }

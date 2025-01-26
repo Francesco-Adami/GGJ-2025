@@ -10,5 +10,6 @@ public class PU_Dash : MonoBehaviour
         PowerUpManager.Instance.SetDash();
 
         PowerUpManager.Instance.RemovePUCompleted(gameObject);
+        UIManager.Instance.ShowUI(UIManager.GameUI.InGame);
     }
 }
