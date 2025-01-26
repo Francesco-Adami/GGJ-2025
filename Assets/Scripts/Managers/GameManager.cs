@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
         PlayerManager.Instance.ReloadBullets();
         PowerUpManager.Instance.ResetPowerUp();
         EnemiesManager.Instance.ResetWaves();
-        UIManager.Instance.ShowUI(UIManager.GameUI.Lose);
         Cursor.lockState = CursorLockMode.None;
+        UIManager.Instance.ShowUI(UIManager.GameUI.Lose);
     }
 }

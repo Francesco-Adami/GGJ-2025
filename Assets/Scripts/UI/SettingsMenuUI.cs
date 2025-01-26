@@ -24,7 +24,7 @@ public class SettingsMenuUI : MonoBehaviour, IGameUI
 
     public void SetFPXVolume(Slider slider)
     {
-        SoundManager.Instance.SetMusicVolume(slider.value);
+        SoundManager.Instance.SetSFXVolume(slider.value);
     }
 
     public void SetFullScreenMode(Toggle mode) 
@@ -34,7 +34,7 @@ public class SettingsMenuUI : MonoBehaviour, IGameUI
 
     public void SetMouseSensitivity(Slider slider) 
     {
-        //mouseSense = slider.value;
+        PlayerManager.Instance.mouseSensitivity *= slider.value;
     }
 
     public void SetOpenedBy(GameObject obj) 

@@ -56,6 +56,10 @@ public class PlayerManager : MonoBehaviour
     public Animator animator;
     //public Animator animator2;
 
+    [Header("Audio")]
+    public AudioClip attackClip;
+    public AudioClip LoseClip;
+
 
     private void Awake()
     {
@@ -183,6 +187,8 @@ public class PlayerManager : MonoBehaviour
         {
             if (enableShoot)
             {
+                GetComponent<AudioSource>().clip = attackClip;
+                GetComponent<AudioSource>().Play();
                 SpawnBullet(firePoint.position, firePoint.rotation);
                 fireCooldown = 1f / fireRate;
                 enableShoot = false;
@@ -247,6 +253,7 @@ public class PlayerManager : MonoBehaviour
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
+            SoundManager.Instance.PlayMusic(LoseClip);
             GameManager.Instance.ResetAll();
         }
     }

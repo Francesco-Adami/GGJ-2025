@@ -34,6 +34,9 @@ public class Enemy : MonoBehaviour
     private PlayerManager player;
     private bool canAttack = true;
 
+    [Header("Audio")]
+    public AudioClip attackSound;
+
 
     // UNITY FUNCTIONS
     private void OnEnable()
@@ -55,11 +58,13 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.Instance.isGameStarted) return;
+
         if (isPlayerInRange && canAttack)
         {
             StartCoroutine(AttackPlayer());
         }
-        else if (GameManager.Instance.isGameStarted)
+        else 
         {
             MoveToPlayer();
         }
@@ -119,6 +124,8 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(fireRate);
 
         player.DamagePlayer(enemyDamage);
+        GetComponent<AudioSource>().clip = attackSound;
+        GetComponent<AudioSource>().Play();
         canAttack = true;
     }
     #endregion

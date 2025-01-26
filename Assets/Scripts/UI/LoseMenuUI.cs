@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LoseMenuUI : MonoBehaviour, IGameUI
 {
+    public AudioClip mainClip;
+
     [SerializeField] private UIManager.GameUI gameUI;
     public UIManager.GameUI GetUIType()
     {
@@ -17,6 +19,7 @@ public class LoseMenuUI : MonoBehaviour, IGameUI
 
     public void BackToMain()
     {
+        SoundManager.Instance.PlayMusic(mainClip);
         UIManager.Instance.ShowUI(UIManager.GameUI.Main);
     }
 }

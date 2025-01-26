@@ -57,7 +57,6 @@ public class PowerUpManager : MonoBehaviour
     public void SetMaxHealth(int addHealth)
     {
         PlayerManager.Instance.maxHealth += addHealth;
-        print("MaxHealth: " + PlayerManager.Instance.maxHealth);
     }
 
     public void SetSpeed(int speedPercentage)
